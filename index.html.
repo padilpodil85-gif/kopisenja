@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Legends: Bang Bang</title>
+    <style>
+        /* CSS Reset & Basic Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0f172a; /* Warna latar belakang gelap khas gaming */
+            color: #ffffff;
+        }
+
+        /* Navbar */
+        header {
+            background-color: #1e293b;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #fbbf24; /* Aksen emas */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Hero Banner Section */
+        .hero-banner {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 1)), 
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1950&q=80') center/cover;
+        }
+        .hero-banner h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #fbbf24;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+        }
+        .hero-banner p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #cbd5e1;
+        }
+
+        /* Tombol Utama */
+        .btn-primary {
+            background-color: #fbbf24;
+            color: #000;
+            padding: 15px 35px;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.9);
+        }
+
+        /* Grid Hero MLBB */
+        .heroes-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .heroes-container h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #fbbf24;
+            font-size: 32px;
+            text-transform: uppercase;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* Kartu Hero */
+        .card {
+            background-color: #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 25px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            border: 2px solid #334155;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #fbbf24;
+        }
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 2px solid #334155;
+        }
+        .card h3 {
+            margin: 20px 0 5px 0;
+            font-size: 24px;
+            color: #f8fafc;
+        }
+        .card p {
+            color: #94a3b8;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        /* Tombol Kartu */
+        .btn-card {
+            background-color: transparent;
+            color: #fbbf24;
+            border: 2px solid #fbbf24;
+            padding: 10px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        .btn-card:hover {
+            background-color: #fbbf24;
+            color: #000;
+        }
+
+        /* Pop-up Kustom (Modal Box) */
+        .modal {
+            display: none; /* Disembunyikan secara default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Latar belakang transparan gelap */
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            background-color: #1e293b;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #fbbf24;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+            animation: slideDown 0.3s;
+        }
+        .modal-content h2 {
+            color: #fbbf24;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        .modal-content p {
+            margin-bottom: 25px;
+            font-size: 16px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .close-btn {
+            background-color: #ef4444; /* Warna merah */
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+        .close-btn:hover {
+            background-color: #dc2626;
+        }
+
+        /* Animasi Modal */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsif untuk HP */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .hero-banner h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasi -->
+    <header>
+        <div class="logo">MLBB AREA</div>
+        <button class="btn-primary" onclick="showModal('Top Up Diamonds', 'Fitur Top Up sedang dalam peningkatan server. Silakan coba beberapa saat lagi.')">Top Up</button>
+    </header>
+
+    <!-- Banner Utama -->
+    <div class="hero-banner">
+        <h1>Welcome to Mobile Legends!</h1>
+        <p>Bersiaplah menghancurkan base musuh dan capai rank Mythical Glory.</p>
+        <button class="btn-primary" onclick="showModal('Mulai Bermain', 'Mengarahkan kamu ke dalam pertempuran di Land of Dawn...')">Main Sekarang</button>
+    </div>
+
+    <!-- Daftar Hero -->
+    <div class="heroes-container">
+        <h2>Daftar Hero Favorit</h2>
+        <div class="grid">
+            
+            <!-- Hero 1: Alucard -->
+            <div class="card">
+                <img src="https://esports.id/img/article/525120201111075647.jpg" alt="Alucard">
+                <h3>Alucard</h3>
+                <p>Role: Fighter / Assassin</p>
+                <button class="btn-card" onclick="showModal('Hero Dipilih: Alucard', '&quot;Nothing lasts forever, we can change the future!&quot;<br><br>Kamu memilih Alucard untuk pertandingan ini.')">Pilih Alucard</button>
+            </div>
+
+            <!-- Hero 2: Miya -->
+            <div class="card">
+                <img src="https://gamedaim.com/wp-content/uploads/2021/07/Miya-Mobile-Legends-Gamedaim.jpg" alt="Miya">
+                <h3>Miya</h3>
+                <p>Role: Marksman</p>
+                <button class="btn-card" onclick="showModal('Hero Dipilih: Miya', '&quot;I am the moonlight that breaks through the darkness!&quot;<br><br>Kamu memilih Miya untuk pertandingan ini.')">Pilih Miya</button>
+            </div>
+
+            <!-- Hero 3: Gusion -->
+            <div class="card">
+                <img src="https://dafunda.com/wp-content/uploads/2021/08/Gusion-Mobile-Legends.jpg" alt="Gusion">
+                <h3>Gusion</h3>
+                <p>Role: Assassin / Mage</p>
+                <button class="btn-card" onclick="showModal('Hero Dipilih: Gusion', '&quot;The perfect combination of might and magic!&quot;<br><br>Kamu memilih Gusion untuk pertandingan ini.')">Pilih Gusion</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Elemen Modal (Pop-up Kustom) -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Judul Pesan</h2>
+            <p id="modalText">Isi pesan akan muncul di sini.</p>
+            <button class="close-btn" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Script untuk fungsi tombol dan Pop-up -->
+    <script>
+        // Fungsi untuk menampilkan pop-up
+        function showModal(title, message) {
+            document.getElementById('modalTitle').innerHTML = title;
+            document.getElementById('modalText').innerHTML = message;
+            document.getElementById('customModal').style.display = 'flex';
+        }
+
+        // Fungsi untuk menutup pop-up
+        function closeModal() {
+            document.getElementById('customModal').style.display = 'none';
+        }
+
+        // Menutup pop-up secara otomatis jika area di luar kotak hitam diklik
+        window.onclick = function(event) {
+            var modal = document.getElementById('customModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+  </html>
